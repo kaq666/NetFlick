@@ -1,0 +1,23 @@
+<h1>Results Page</h1>
+
+<div class="container">
+    <% if (data.Search != null) {
+        data.Search.forEach(function(movie) { %>
+            <div class="card" onclick="movieTouched('<%= movie.imdbID %>')" data-arg1=<%= movie.imdbID %>>
+                <img src="<%= movie.Poster %>" alt="<%= movie.Title %>">
+                <div class="title">
+                    <%= movie.Title %>
+                </div>
+                <div id="<%= movie.imdbID %>" hidden>
+                    <div id="movieData"></div>
+                    <div>
+                        <button>Download</button>
+                    </div>
+                </div>
+            </div>
+        <% })
+    } %>
+</div>
+
+<script src="/cards/cards.js"></script>
+<link rel="stylesheet" href="/cards/cards.css">

@@ -3,9 +3,10 @@ var app     = express();
 var request = require("request");
 
 app.set("view engine", "ejs")
+app.use(express.static('public'));
 
 app.get("/", function(req, res){
-    res.render("search");
+    res.render("index");
 });
 
 app.get("/results", function(req, res){
@@ -14,7 +15,18 @@ app.get("/results", function(req, res){
     request(url, function(error, response, body){
         if(!error && response.statusCode == 200){
             var data = JSON.parse(body);
-            res.render("results", {data: data});
+            res.render("cards/cards", {data: data});
+        }
+    });
+});
+
+app.get("/infos", function(req, res){
+    var id = req.query.id;
+    var url = "http://www.omdbapi.com/?i=" + id + "&apikey=thewdb&";
+    request(url, function(error, response, body){
+        if(!error && response.statusCode == 200){
+            var data = JSON.parse(body);
+            res.send(data);
         }
     });
 });
